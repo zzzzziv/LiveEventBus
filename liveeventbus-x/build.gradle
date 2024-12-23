@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 group='com.github.zzzzziv'
-version = '2.0.0'
+version = '2.0.2'
 android {
     namespace "com.ziv.liveeventbus"
     compileSdk 34
@@ -23,11 +23,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = '1.8'
     }
 }
 
@@ -45,7 +45,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.zzzzziv'
                 artifactId = 'live-event-bus'
-                version = '2.0.0'
+                version = '2.0.2'
             }
         }
     }
