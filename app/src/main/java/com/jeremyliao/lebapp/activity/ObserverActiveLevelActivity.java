@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.jeremyliao.lebapp.LiveEventBusDemo;
-import com.jeremyliao.livedatabus.R;
-import com.jeremyliao.livedatabus.databinding.ActivityObserverActiveLevelDemoBinding;
+import com.jeremyliao.lebapp.R;
+import com.jeremyliao.lebapp.databinding.ActivityObserverActiveLevelDemoBinding;
 import com.ziv.liveeventbus.LiveEventBus;
 
 

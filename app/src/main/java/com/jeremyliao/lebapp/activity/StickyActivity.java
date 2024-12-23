@@ -6,10 +6,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
-
 import com.jeremyliao.lebapp.LiveEventBusDemo;
-import com.jeremyliao.livedatabus.R;
-import com.jeremyliao.livedatabus.databinding.ActivityStickyDemoBinding;
+import com.jeremyliao.lebapp.R;
+import com.jeremyliao.lebapp.databinding.ActivityStickyDemoBinding;
 import com.ziv.liveeventbus.LiveEventBus;
 
 
