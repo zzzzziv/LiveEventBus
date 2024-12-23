@@ -1,12 +1,12 @@
-package com.ziv.liveeventbus;
+package com.ziv.liveeventbus
 
-import androidx.annotation.NonNull;
-
-import com.ziv.liveeventbus.core.Config;
-import com.ziv.liveeventbus.core.LiveEvent;
-import com.ziv.liveeventbus.core.LiveEventBusCore;
-import com.ziv.liveeventbus.core.Observable;
-import com.ziv.liveeventbus.core.ObservableConfig;
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import com.ziv.liveeventbus.core.Config
+import com.ziv.liveeventbus.core.LiveEvent
+import com.ziv.liveeventbus.core.LiveEventBusCore
+import com.ziv.liveeventbus.core.Observable
+import com.ziv.liveeventbus.core.ObservableConfig
 
 /**
  * _     _           _____                _  ______
@@ -20,9 +20,7 @@ import com.ziv.liveeventbus.core.ObservableConfig;
  *
  * Created by liaohailiang on 2019/1/21.
  */
-
-public final class LiveEventBus {
-
+object LiveEventBus {
     /**
      * get observable by key with type
      *
@@ -30,9 +28,10 @@ public final class LiveEventBus {
      * @param type Class
      * @param <T> T
      * @return Observable
-     */
-    public static <T> Observable<T> get(@NonNull String key, @NonNull Class<T> type) {
-        return LiveEventBusCore.get().with(key, type);
+    </T> */
+    @JvmStatic
+    fun <T> get(key: String, type: Class<T>): Observable<T> {
+        return LiveEventBusCore.get().with(key, type)
     }
 
     /**
@@ -41,9 +40,10 @@ public final class LiveEventBus {
      * @param key String
      * @param <T> T
      * @return Observable
-     */
-    public static <T> Observable<T> get(@NonNull String key) {
-        return (Observable<T>)get(key, Object.class);
+    </T> */
+    @JvmStatic
+    fun <T> get(key: String): Observable<T> {
+        return get(key, Any::class.java) as Observable<T>
     }
 
     /**
@@ -52,31 +52,75 @@ public final class LiveEventBus {
      * @param eventType Class
      * @param <T> T
      * @return Observable
-     */
-    public static <T extends LiveEvent> Observable<T> get(@NonNull Class<T> eventType) {
-        return get(eventType.getName(), eventType);
+    </T> */
+    @JvmStatic
+    fun <T : LiveEvent?> get(eventType: Class<T>): Observable<T> {
+        return get(eventType.name, eventType)
     }
 
+
     /**
-     * use the inner class Config to set params
-     * first of all, call config to get the Config instance
-     * then, call the method of Config to config LiveEventBus
-     * call this method in Application.onCreate
+    首先使用内部类 Config 设置 params，
+    调用 config 获取 Config 实例，
+    然后调用 Config 的方法配置 LiveEventBus，
+    在 Application.onCreate 中调用该方法
      * @return Config
      */
-    public static Config config() {
-        return LiveEventBusCore.get().config();
+    @JvmStatic
+    fun config(): Config {
+        return LiveEventBusCore.get().config()
     }
 
     /**
-     * use the inner class Config to set params
-     * first of all, call config to get the Config instance
-     * then, call the method of Config to config LiveEventBus
-     * call this method in Application.onCreate
+ * 使用内部类 Config 设置 params
+     * 首先调用 Config 获取 Config 实例
+     * 然后，调用 Config 的方法配置 LiveEventBus
+     * 在 Application.onCreate 中调用该方法
      * @param key String
      * @return ObservableConfig
      */
-    public static ObservableConfig config(@NonNull String key) {
-        return LiveEventBusCore.get().config(key);
+    fun config(key: String): ObservableConfig {
+        return LiveEventBusCore.get().config(key)
+    }
+
+    /**
+     * 推送消息
+     */
+    fun post(liveEvent: LiveEvent){
+        get(liveEvent.javaClass).post(liveEvent)
+    }
+
+    /**
+     * 推送消息-跨进程
+     */
+    fun postAcrossProcess(liveEvent: LiveEvent){
+        get(LiveEvent::class.java).postAcrossProcess(liveEvent)
+    }
+
+    /**
+     * 推送消息-跨App
+     */
+    fun postAcrossApp(liveEvent: LiveEvent){
+        get(LiveEvent::class.java).postAcrossApp(liveEvent)
+    }
+
+    /**
+     * 推送消息-延迟
+     */
+    fun postAcrossApp(liveEvent: LiveEvent,long: Long){
+        get(LiveEvent::class.java).postDelay(liveEvent,long)
+    }
+
+    /**
+     * 订阅消息-如果之前有消息发送，可以在注册时收到消息（消息同步）
+     */
+    inline fun <reified T : LiveEvent?> observeSticky(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+        return get(T::class.java).observeSticky(lifecycleOwner,observer)
+    }
+    /**
+     * 订阅消息
+     */
+    inline fun <reified T : LiveEvent?> observe(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+        return get(T::class.java).observe(lifecycleOwner,observer)
     }
 }

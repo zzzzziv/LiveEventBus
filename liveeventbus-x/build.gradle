@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 group='com.github.zzzzziv'
-version = '1.9.0'
+version = '2.0.0'
 android {
     namespace "com.ziv.liveeventbus"
     compileSdk 34
@@ -39,7 +39,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.zzzzziv'
                 artifactId = 'live-event-bus'
-                version = '1.9.0'
+                version = '2.0.0'
             }
         }
     }

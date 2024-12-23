@@ -378,7 +378,7 @@ public final class LiveEventBusCore {
                 return;
             }
             Intent intent = new Intent(IpcConst.ACTION);
-            if (foreground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (foreground) {
                 intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
             }
             if (onlyInApp) {
